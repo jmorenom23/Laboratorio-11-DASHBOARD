@@ -117,7 +117,7 @@ with izquierda:
                .agg(ingreso=("ingreso_total", "sum")).sort_values(by="ingreso", ascending=False))
     fig = px.bar(data_frame=df_plot, x="ingreso", y="preferencia_declarada", orientation="h",  color="preferencia_declarada", 
                  color_discrete_map={"Papelería": "#E8A0BF",
-                                                 "Cuidado Personal": "#E8A0BF",
+                                                 "Cuidado personal": "#E8A0BF",
                                                  "Deporte": "#81B29A",
                                                  "Hogar": "#E07A5F",
                                                  "Tecnología": "#6EC1E4"})
@@ -155,9 +155,10 @@ else:
     # Punto 3
     with graf1:
         st.subheader("3. Tasa de recompra por canal")
-        df_plot = df_canal.sort_values(by="tasa_recompra")
+        df_plot = df_canal.sort_values(by="tasa_recompra").copy()
+        df_plot["etiqueta"] = (df_plot.tasa_recompra.astype(str) + "% (n=" + df_plot.compradores.astype(str) + ")")
         fig = px.bar(data_frame=df_plot, x="tasa_recompra", y="canal_adquisicion", orientation="h",
-                     text="tasa_recompra", hover_data=["compradores"], color="canal_adquisicion",
+                     text="etiqueta", hover_data=["compradores"], color="canal_adquisicion",
                      color_discrete_map={"Redes sociales": "#a7c957",
                                          "Búsqueda": "#6A994E",
                                          "Referidos": "#386641",
@@ -165,7 +166,7 @@ else:
         fig.update_layout(xaxis_title="% de compradores con 2+ pedidos", yaxis_title="Canal", showlegend=False)
         st.plotly_chart(fig, width="stretch")
         st.markdown("""
-**Justificación:** sxxxx
+**Justificación del gráfico:** Escogimos las barras horizontales porque nos permiten comparar mejor los resultados de cada canal. Al organizarlas de menor a mayor, podemos identificar fácilmente cuál tiene la tasa de recompra más baja y cuál la más alta. No utilizamos un gráfico de torta porque los canales no representan partes de un mismo total, ni uno de líneas porque no estamos analizando cambios en el tiempo. También mostramos la cantidad de compradores de cada canal.
 """)
 
     # Punto 4
@@ -182,17 +183,24 @@ else:
         st.plotly_chart(fig, width="stretch")
         st.markdown("""
 **¿El canal con mayor volumen coincide necesariamente con el de menor tasa de recompra?**
-xxxx
+**No, no necesariamente.** El volumen de clientes con un solo pedido depende del tamaño del canal, mientras que la tasa de recompra es una proporción. En los datos completos Redes sociales tiene el mayor volumen (147) y la menor tasa (59,6 %), pero el orden no se mantiene en el resto: Búsqueda tiene más clientes de un pedido que Referidos (83 vs. 74) y, sin embargo, una tasa mayor (68,3 % vs. 65,7 %). Un canal grande puede tener una buena tasa y aun así acumular muchos clientes de un pedido, y uno pequeño puede tener tasa baja con pocos clientes por impactar.
 """)
 
 # Punto 5
 st.subheader("5. Comprobación de los filtros")
 st.markdown("""
-xxxx
+Probamos los filtros con dos selecciones y las métricas y ambos gráficos se actualizan:
+
+| Selección | Compradores | % recompra | Clientes con 1 compra | % con 1 compra |
+|---|---|---|---|---|
+| Ciudad = Bogotá | 513 | 67,06 % | 169 | 32,94 % |
+| Preferencia = Tecnología | 249 | 66,67 % | 83 | 33,33 % |
+
+Si no hay compradores, el tablero muestra una advertencia y N/A, sin errores.
 """)
 
 # Punto 6
 st.subheader("6. Recomendación")
 st.markdown("""
-xxx
+Creemos que lo mejor sería empezar el piloto en Redes sociales, ya que encontramos 147 clientes que solo hicieron una compra y es el canal con la tasa de recompra más baja (59,6 %). Esto nos hace pensar que es donde hay más oportunidades de mejorar. Sin embargo, los datos no nos dicen por qué esos clientes no volvieron a comprar. Por eso, para saber si el piloto funciona, compararíamos la tasa de recompra con la de otro grupo de clientes del mismo canal que no participe en el piloto.
 """)
