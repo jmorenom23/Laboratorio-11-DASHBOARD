@@ -183,20 +183,13 @@ else:
         st.plotly_chart(fig, width="stretch")
         st.markdown("""
 **¿El canal con mayor volumen coincide necesariamente con el de menor tasa de recompra?**
-**No, no necesariamente.** El volumen de clientes con un solo pedido depende del tamaño del canal, mientras que la tasa de recompra es una proporción. En los datos completos Redes sociales tiene el mayor volumen (147) y la menor tasa (59,6 %), pero el orden no se mantiene en el resto: Búsqueda tiene más clientes de un pedido que Referidos (83 vs. 74) y, sin embargo, una tasa mayor (68,3 % vs. 65,7 %). Un canal grande puede tener una buena tasa y aun así acumular muchos clientes de un pedido, y uno pequeño puede tener tasa baja con pocos clientes por impactar.
+No necesariamente, porque la cantidad de clientes que solo compraron una vez también depende de qué tan grande sea cada canal, mientras que la tasa de recompra se calcula como un porcentaje. Por ejemplo, Redes sociales tiene 147 clientes con una sola compra y la tasa más baja (59,6 %), pero esto no pasa igual en todos los canales. Búsqueda tiene 83 clientes que compraron una sola vez, más que Referidos, que tiene 74, y aun así su tasa de recompra es mayor (68,3 % frente a 65,7 %). Esto demuestra que un canal puede tener muchos clientes que no vuelven a comprar y seguir teniendo una buena tasa de recompra. De la misma manera, un canal pequeño puede tener una tasa baja, aunque la cantidad de clientes que se podrían recuperar sea menor.
 """)
 
 # Punto 5
 st.subheader("5. Comprobación de los filtros")
 st.markdown("""
-Probamos los filtros con dos selecciones y las métricas y ambos gráficos se actualizan:
-
-| Selección | Compradores | % recompra | Clientes con 1 compra | % con 1 compra |
-|---|---|---|---|---|
-| Ciudad = Bogotá | 513 | 67,06 % | 169 | 32,94 % |
-| Preferencia = Tecnología | 249 | 66,67 % | 83 | 33,33 % |
-
-Si no hay compradores, el tablero muestra una advertencia y N/A, sin errores.
+Para comprobar que los filtros funcionaran bien, hicimos dos pruebas. Primero seleccionamos únicamente Bogotá y el tablero nos mostró 513 compradores, de los cuales 169 habían comprado una sola vez (32,94 %), con una tasa de recompra del 67,06 %. Después filtramos por la preferencia Tecnología y obtuvimos 249 compradores, 83 con una sola compra (33,33 %) y una tasa de recompra del 66,67 %. En las dos pruebas vimos que tanto las cifras como los gráficos cambiaban según el filtro seleccionado. Por último, probamos una selección que no tenía compradores y comprobamos que el tablero mostraba una advertencia y N/A en lugar de presentar errores.
 """)
 
 # Punto 6
